@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">LetsGo</string>
+    <string name="slogan">Travel together!</string>
+    <string name="login">LogIn</string>
+    <string name="signup">SignUp</string>
+    <string name="logo">LetsGO</string>
+    <string name="name">Никнейм</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="confPassword">Подтвердите пароль</string>
+    <string name="age">Возраст</string>
+    <string name="logTxt">Ваш логин</string>
+    <string name="forgotPass">Reset email</string>
+    <string name="passenger">Пассажир</string>
+    <string name="driver">Водитель</string>
+</resources>
