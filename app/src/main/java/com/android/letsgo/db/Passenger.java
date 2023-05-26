@@ -4,26 +4,21 @@ public class Passenger {
 
     private String name;
     private String surname;
-    private String age;
     private String city;
     private String phone;
-    private String email;
+    private String countPassengers;
     private String description;
-    private String rate;
     private String imgUrl;
 
 
-    public Passenger(String name, String surname, String age, String city,
-                   String phone, String email, String description,
-                  String rate, String imgUrl){
+    public Passenger(String name, String surname, String city,
+                   String phone, String countPassengers, String description, String imgUrl){
         this.name = name;
         this.surname = surname;
-        this.age = age;
         this.city = city;
         this.phone = phone;
-        this.email = email;
+        this.countPassengers = countPassengers;
         this.description = description;
-        this.rate = rate;
         this.imgUrl = imgUrl;
     }
 
@@ -35,9 +30,6 @@ public class Passenger {
         this.surname = surname;
     }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
 
     public void setCity(String city) {
         this.city = city;
@@ -47,17 +39,14 @@ public class Passenger {
         this.phone = phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCountPassengers(String countPassengers) {
+        this.countPassengers = countPassengers;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
-    }
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
@@ -71,10 +60,6 @@ public class Passenger {
         return surname;
     }
 
-    public String getAge() {
-        return age;
-    }
-
     public String getCity() {
         return city;
     }
@@ -84,17 +69,14 @@ public class Passenger {
         return phone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCountPassengers() {
+        return countPassengers;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getRate() {
-        return rate;
-    }
 
     public String getImgUrl() {
         return imgUrl;

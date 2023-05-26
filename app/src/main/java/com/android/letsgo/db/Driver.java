@@ -3,30 +3,34 @@ package com.android.letsgo.db;
 public class Driver {
     private String name;
     private String surname;
-    private String age;
-    private String city;
+    private String cityFrom;
+    private String cityTo;
     private String experience;
     private String phone;
-    private String email;
+    private String car;
     private String carNumber;
     private String description;
-    private String rate;
+    private String price;
+    private String countPassenger;
+    private String date;
     private String imgUrl;
     private String imgCarUrl;
 
-    public Driver(String name, String surname, String age, String city,
-                  String experience, String phone, String email, String carNumber, String description,
-                  String rate, String imgUrl, String imgCarUrl){
+    public Driver(String name, String surname, String cityFrom, String cityTo,
+                  String experience, String phone, String car, String carNumber, String description,
+                  String price, String countPassenger, String date, String imgUrl, String imgCarUrl){
         this.name = name;
         this.surname = surname;
-        this.age = age;
-        this.city = city;
+        this.cityFrom = cityFrom;
+        this.cityTo = cityTo;
         this.experience = experience;
         this.phone = phone;
-        this.email = email;
+        this.car = car;
         this.carNumber = carNumber;
         this.description = description;
-        this.rate = rate;
+        this.price = price;
+        this.countPassenger = countPassenger;
+        this.date = date;
         this.imgUrl = imgUrl;
         this.imgCarUrl = imgCarUrl;
     }
@@ -39,12 +43,13 @@ public class Driver {
         this.surname = surname;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+
+    public void setCityFrom(String cityFrom) {
+        this.cityFrom = cityFrom;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityTo(String cityTo) {
+        this.cityTo = cityTo;
     }
 
     public void setExperience(String experience) {
@@ -55,8 +60,8 @@ public class Driver {
         this.phone = phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCar(String car) {
+        this.car = car;
     }
 
     public void setCarNumber(String carNumber) {
@@ -67,8 +72,16 @@ public class Driver {
         this.description = description;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setCountPassenger(String countPassenger) {
+        this.countPassenger = countPassenger;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setImgUrl(String imgUrl) {
@@ -87,12 +100,12 @@ public class Driver {
         return surname;
     }
 
-    public String getAge() {
-        return age;
+    public String getCityFrom() {
+        return cityFrom;
     }
 
-    public String getCity() {
-        return city;
+    public String getCityTo() {
+        return cityTo;
     }
 
     public String getExperience() {
@@ -103,8 +116,8 @@ public class Driver {
         return phone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCar() {
+        return car;
     }
 
     public String getCarNumber() {
@@ -115,8 +128,16 @@ public class Driver {
         return description;
     }
 
-    public String getRate() {
-        return rate;
+    public String getPrice() {
+        return price;
+    }
+
+    public String getCountPassenger() {
+        return countPassenger;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getImgUrl() {

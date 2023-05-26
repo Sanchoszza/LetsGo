@@ -44,6 +44,7 @@
             android:src="@drawable/people_icon"/>
 
         <ImageView
+
             android:id="@+id/person"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
