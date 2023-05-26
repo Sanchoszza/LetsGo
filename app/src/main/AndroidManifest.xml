@@ -12,6 +12,12 @@
         android:theme="@style/Theme.LetsGo"
         tools:targetApi="31">
         <activity
+            android:name=".activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.InitActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>

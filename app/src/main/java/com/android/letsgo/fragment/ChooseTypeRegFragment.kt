@@ -16,7 +16,6 @@ class ChooseTypeRegFragment : Fragment() {
     private lateinit var btnPassenger: Button
     private lateinit var btnDriver: Button
 
-    private var logInNow: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +33,11 @@ class ChooseTypeRegFragment : Fragment() {
         btnDriver.setOnClickListener{
             (activity as MainActivity?)!!.replaceFragment(RegistrationFragmentKt.Companion.newInstance(1), false)
         }
+
+//        val logInNow: TextView = view.findViewById(R.id.loginNowBtn)
+//        logInNow.setOnClickListener{
+//            (activity as MainActivity?)!!.replaceFragment(LoginFragmentKt.newInstance(), true)
+//        }
         return view
     }
 

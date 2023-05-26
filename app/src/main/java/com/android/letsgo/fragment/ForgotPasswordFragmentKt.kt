@@ -1,60 +1,85 @@
 package com.android.letsgo.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import com.android.letsgo.R
+import com.android.letsgo.activity.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ForgotPasswordFragmentKt.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ForgotPasswordFragmentKt : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val TAG = "ForgotPasswordActivityKt"
+
+    private var resEmail: EditText? = null
+
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot_password_kt, container, false)
+        val view = inflater.inflate(R.layout.fragment_forgot_password_kt, container, false)
+
+        val backArr: ImageView = view.findViewById(R.id.back_arrow)
+        backArr.setOnClickListener{
+            (activity as MainActivity?)!!.replaceFragment(StartFragmentKt.newInstance(), true)
+        }
+
+        val resetBtn: Button = view.findViewById(R.id.btn_forgot)
+        resetBtn.setOnClickListener{
+            initialise()
+        }
+
+        return view
+    }
+
+    private fun initialise(){
+        resEmail = view?.findViewById(R.id.login_text) as EditText
+
+        mAuth = FirebaseAuth.getInstance()
+
+        sendPasswordResetEmail()
+    }
+
+    private fun sendPasswordResetEmail(){
+        val email = resEmail?.text.toString()
+
+        if(!TextUtils.isEmpty(email)){
+            mAuth!!.sendPasswordResetEmail(email).
+            addOnCompleteListener {
+                    task ->
+                if(task.isSuccessful){
+                    val message = "КОд отправлен на почту."
+                    Log.d(TAG, message)
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show()
+                    updateUI()
+                } else{
+                    Log.w(TAG, "message", task.exception)
+                    Toast.makeText(getContext(), "Пользователь с данной почтой не найден", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else{
+            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateUI(){
+        (activity as MainActivity?)!!.replaceFragment(LoginFragmentKt.newInstance(), true)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ForgotPasswordFragmentKt.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ForgotPasswordFragmentKt().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): ForgotPasswordFragmentKt? {
+            return ForgotPasswordFragmentKt()
+        }
     }
 }

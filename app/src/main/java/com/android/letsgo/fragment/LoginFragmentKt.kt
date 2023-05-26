@@ -1,60 +1,117 @@
 package com.android.letsgo.fragment
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import com.android.letsgo.R
+import com.android.letsgo.activity.MainActivity
+import com.android.letsgo.activity.StartActivity
+import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragmentKt.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragmentKt : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val TAG = "LoginActivity"
+
+    private var email: String? = null
+    private var password: String? = null
+
+    private var login: EditText? = null
+    private var nPassword: EditText? = null
+    private var btnLogin: Button? = null
+    private var btnSignIn: TextView? = null
+    private var forgotPassword: TextView? = null
+    private var mProgressBar: ProgressDialog? = null
+
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_kt, container, false)
+        val view = inflater.inflate(R.layout.fragment_login_kt, container, false)
+
+        val backArr: ImageView = view.findViewById(R.id.back_arrow)
+        backArr.setOnClickListener{
+            (activity as MainActivity?)!!.replaceFragment(StartFragmentKt.newInstance(), true)
+        }
+        val btnLog: Button = view.findViewById(R.id.btn_log)
+        btnLog.setOnClickListener{
+            initialise()
+        }
+        val regNowBtn: TextView = view.findViewById(R.id.regNowBtn)
+        regNowBtn.setOnClickListener{
+            (activity as MainActivity?)!!.replaceFragment(ChooseTypeRegFragment.newInstance(), true)
+        }
+        val forgotPass: TextView = view.findViewById(R.id.forgPass)
+        forgotPass.setOnClickListener{
+            (activity as MainActivity?)!!.replaceFragment(ForgotPasswordFragmentKt.newInstance(), true)
+        }
+        return view
+    }
+
+    private fun initialise(){
+        login = view?.findViewById(R.id.login_text) as EditText
+        nPassword = view?.findViewById(R.id.pass_text) as EditText
+        btnSignIn = view?.findViewById(R.id.regNowBtn) as TextView
+        forgotPassword = view?.findViewById(R.id.forgPass) as TextView
+        mProgressBar = ProgressDialog(getContext())
+
+        mAuth = FirebaseAuth.getInstance()
+
+        btnSignIn!!.setOnClickListener{
+            (activity as MainActivity?)!!.replaceFragment(ChooseTypeRegFragment.newInstance(), true)
+        }
+
+        loginUser()
+    }
+
+    private fun loginUser(){
+        email = login?.text.toString().trim()
+        password = nPassword?.text.toString()
+//
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            mProgressBar!!.setMessage("Пожалуйста подождите")
+            mProgressBar!!.show()
+
+            Log.d(TAG, "Logging in user")
+
+            mAuth!!.signInWithEmailAndPassword(email!!, password!!).
+            addOnCompleteListener {
+                    task ->
+                mProgressBar!!.hide()
+
+                if(task.isSuccessful){
+                    Log.d(TAG, "signInWithEmail:success")
+                    updateUI()
+                } else{
+                    Log.e(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        } else{
+            Toast.makeText(getContext(), "Enter all details", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateUI(){
+        val intent = Intent(getContext(), StartActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("login", email)
+        startActivity(intent)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragmentKt.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragmentKt().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): LoginFragmentKt? {
+            return LoginFragmentKt()
+        }
     }
 }
